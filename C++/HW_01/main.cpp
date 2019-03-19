@@ -42,27 +42,32 @@ int bin_search_max (const int* arr, int size, int value) {
     return -1;
 }
 
-int count_prim(const int* data, size_t data_size, char* mask, size_t mask_size, 
-    size_t first_ind, size_t second_ind) {
-    if (mask_size - 1 < data[data_size - 1]) {
-        return -1;
+char* make_sieve(int max_num, int& sieve_size) {
+    sieve_size = max_num + 1;
+    char* sieve = new char[max_num + 1];
+    sieve[0] = 0;
+    sieve[1] = 0;
+    int max_sqrt = sqrt(max_num);
+    for (int i = 2; i <= max_num; i++) {
+        sieve[i] = 1;
     }
     
-    int count = 0;
-    int high_board = data[second_ind];
-    int high_board_sqrt = sqrt(high_board);
-    for (int j = 2; j <= high_board; j++) {
-        mask[j] = 1;
-    }
-    for (int j = 2; j <= high_board_sqrt; j++) {
-        if(mask[j]) {
-            for (int k = j * 2; k <= high_board; k += j) {
-                mask[k] = 0;
+    for (int i = 2; i <= max_sqrt; i++) {
+        if (sieve[i]) {
+            for (int j = i * 2; j <= max_num; j += i) {
+                sieve[j] = 0;
             }
         }
     }
+
+    return sieve;
+}
+
+int count_prim(const int* data, size_t data_size, char* sieve, size_t sieve_size, 
+    size_t first_ind, size_t second_ind) {
+    int count = 0;
     for (int j = first_ind; j <= second_ind; j++) {
-        count += mask[Data[j]];
+        count += sieve[data[j]];
     }
 
     return count;
@@ -73,22 +78,30 @@ int main (int argc, char* argv[]) {
         return 255;
     }
 
-    int mask_size = Data[Size - 1] + 1;
-    char* mask = new char[mask_size];
-    mask[0] = 0;
-    mask[1] = 0;
+    int* int_args = new int[argc - 1];
+    int max = 0;
+    for (int i = 1; i < argc; i++) {
+        int_args[i - 1] = std::atoi(argv[i]);
+        if (int_args[i - 1] > max) {
+            max = int_args[i - 1];
+        }
+    }
 
-    for (int i = 1; i < argc; i += 2) {
+    int seive_size = 0;
+    char* seive = make_sieve(max, seive_size);
+
+    for (int i = 0; i < argc - 1; i += 2) {
         int count = 0;
-        int first_num = std::atoi(argv[i]);
-        int second_num = std::atoi(argv[i + 1]);
+        int first_num = int_args[i];
+        int second_num = int_args[i + 1];
         size_t first_ind = bin_search_min(Data, Size, first_num);
         size_t second_ind = bin_search_max(Data, Size, second_num);
-        count = count_prim(Data, Size, mask, mask_size, first_ind, second_ind);
+        count = count_prim(Data, Size, seive, seive_size, first_ind, second_ind);
         std::cout << count << "\n";
     }
 
-    delete[] mask;
+    delete[] int_args;
+    delete[] seive;
 
     return 0;
 }
