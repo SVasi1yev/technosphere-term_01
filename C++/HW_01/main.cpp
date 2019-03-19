@@ -44,7 +44,7 @@ size_t bin_search_max (const int* arr, int size, int value) {
 
 char* make_sieve(int max_num, size_t& sieve_size) {
     sieve_size = max_num + 1;
-    char* sieve = new char[max_num + 1];
+    char* sieve = new char[sieve_size];
     sieve[0] = 0;
     sieve[1] = 0;
     int max_sqrt = sqrt(max_num);
