@@ -2,9 +2,9 @@
 #include <cmath>
 #include "numbers.dat"
 
-int bin_search_min (const int* arr, int size, int value) {
-    int low_board = 0, high_board = Size - 1;
-    int mid = high_board / 2;
+size_t bin_search_min (const int* arr, int size, int value) {
+    size_t low_board = 0, high_board = Size - 1;
+    size_t mid = high_board / 2;
 
     while (low_board < high_board) {
         if (value <= arr[mid]) {
@@ -22,9 +22,9 @@ int bin_search_min (const int* arr, int size, int value) {
     return -1;
 }
 
-int bin_search_max (const int* arr, int size, int value) {
-    int low_board = 0, high_board = Size - 1;
-    int mid = ceil((double)high_board / 2);
+size_t bin_search_max (const int* arr, int size, int value) {
+    size_t low_board = 0, high_board = Size - 1;
+    size_t mid = ceil((double)high_board / 2);
 
     while (low_board < high_board) {
         if (value >= arr[mid]) {
@@ -42,7 +42,7 @@ int bin_search_max (const int* arr, int size, int value) {
     return -1;
 }
 
-char* make_sieve(int max_num, int& sieve_size) {
+char* make_sieve(int max_num, size_t& sieve_size) {
     sieve_size = max_num + 1;
     char* sieve = new char[max_num + 1];
     sieve[0] = 0;
@@ -51,7 +51,7 @@ char* make_sieve(int max_num, int& sieve_size) {
     for (int i = 2; i <= max_num; i++) {
         sieve[i] = 1;
     }
-    
+
     for (int i = 2; i <= max_sqrt; i++) {
         if (sieve[i]) {
             for (int j = i * 2; j <= max_num; j += i) {
@@ -63,7 +63,7 @@ char* make_sieve(int max_num, int& sieve_size) {
     return sieve;
 }
 
-int count_prim(const int* data, size_t data_size, char* sieve, size_t sieve_size, 
+int count_prim(const int* data, size_t data_size, const char* sieve, size_t sieve_size, 
     size_t first_ind, size_t second_ind) {
     int count = 0;
     for (int j = first_ind; j <= second_ind; j++) {
@@ -87,7 +87,7 @@ int main (int argc, char* argv[]) {
         }
     }
 
-    int seive_size = 0;
+    size_t seive_size = 0;
     char* seive = make_sieve(max, seive_size);
 
     for (int i = 0; i < argc - 1; i += 2) {
