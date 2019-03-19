@@ -66,8 +66,8 @@ char* make_sieve(int max_num, size_t& sieve_size) {
 int count_prim(const int* data, size_t data_size, const char* sieve, size_t sieve_size, 
     size_t first_ind, size_t second_ind) {
     int count = 0;
-    for (int j = first_ind; j <= second_ind; j++) {
-        count += sieve[data[j]];
+    for (int i = first_ind; i <= second_ind; i++) {
+        count += sieve[data[i]];
     }
 
     return count;
