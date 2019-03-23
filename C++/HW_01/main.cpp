@@ -78,6 +78,7 @@ int main (int argc, char* argv[]) {
         return 255;
     }
 
+    /*
     int* int_args = new int[argc - 1];
     int max = 0;
     for (int i = 1; i < argc; i++) {
@@ -86,21 +87,30 @@ int main (int argc, char* argv[]) {
             max = int_args[i - 1];
         }
     }
+    */
+    
+    int max = 0;
+    for (int i = 1; i < argc; i++) {
+        int temp = std::atoi(argv[i]);
+        if (temp > max) {
+            max = temp;
+        }
+    }
 
     size_t seive_size = 0;
     char* seive = make_sieve(max, seive_size);
 
-    for (int i = 0; i < argc - 1; i += 2) {
+    for (int i = 1; i < argc; i += 2) {
         int count = 0;
-        int first_num = int_args[i];
-        int second_num = int_args[i + 1];
+        int first_num = std::atoi(argv[i]);
+        int second_num = std::atoi(argv[i + 1]);
         size_t first_ind = bin_search_min(Data, Size, first_num);
         size_t second_ind = bin_search_max(Data, Size, second_num);
         count = count_prim(Data, Size, seive, seive_size, first_ind, second_ind);
         std::cout << count << "\n";
     }
 
-    delete[] int_args;
+    //delete[] int_args;
     delete[] seive;
 
     return 0;
