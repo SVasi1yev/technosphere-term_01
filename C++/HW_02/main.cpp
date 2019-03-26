@@ -182,17 +182,9 @@ class Parser {
 
 public:
     std::string parse (const std::string& exp) {
-        try {
-            t.fit(exp);
-        } catch (std::invalid_argument e) {
-            throw e;
-        }
+        t.fit(exp);
         pos = 0;
-        try {
-            return std::to_string(addSub());
-        } catch (std::invalid_argument e) {
-            throw e;
-        }
+        return std::to_string(addSub());
     }
 };
 
