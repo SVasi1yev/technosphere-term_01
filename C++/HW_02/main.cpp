@@ -196,7 +196,7 @@ int main (int argc, char* argv[]) {
     Parser p;
     try {
         std::cout << p.parse(argv[1]) << '\n';
-    } catch (std::invalid_argument e) {
+    } catch (std::invalid_argument& e) {
         std::cout << e.what() << '\n';
         return 1;
     }
