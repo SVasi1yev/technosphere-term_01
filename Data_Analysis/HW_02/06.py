@@ -1,19 +1,17 @@
-a = [1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796]
-
+def brackets1(n, counter_open = 0, counter_close = 0, ans = ''):
+    if counter_open + counter_close == 2 * n:
+        yield ans
+    if counter_open < n:
+        yield from brackets1(n, counter_open + 1, counter_close, ans + '(')
+    if counter_open > counter_close:
+        yield from brackets1(n, counter_open, counter_close + 1, ans + ')')
+   
 def brackets(n):
-    i = 0
-    if n == 1:
-        yield '()'
-    else:
-        for e in brackets(n - 1):
-            yield '(' + e + ')'
-            i += 1
-        for e in brackets(n - 1): 
-            if (i >= a[n]):
-                break
-            yield e + '()'
-            i += 1
-            if (i >= a[n]):
-                break
-            yield '()' + e
-            i += 1
+    yield from brackets1(n)
+
+try:
+    n = int(input())
+    for e in brackets(n):
+        print(e)
+except:
+    pass
